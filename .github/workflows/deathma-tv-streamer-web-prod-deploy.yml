@@ -1,10 +1,11 @@
-name: Deploy to Staging
+name: Deploy to Production
 
 on:
   push:
-    branches:
-      - main
-
+    branches-ignore:
+      - "**"
+    tags:
+      - "v*"
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -30,23 +31,26 @@ jobs:
         with:
           node-version: "16.x"
           cache: yarn
-          cache-dependency-path: "./yarn.lock"
+          cache-dependency-path: "./deathma-tv-streamer-web/yarn.lock"
 
       - name: yarn install
         # if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install --prefer-offline
+        working-directory: deathma-tv-streamer-web
 
       - name: create env
         run: |
-          echo "VITE_AUTH0_DOMAIN=${{ secrets.STG_AUTH0_DOMAIN }}" >> .env
-          echo "VITE_AUTH0_CLIENT_ID=${{ secrets.STG_AUTH0_CLIENT_ID }}" >> .env
-          echo "VITE_DEATH_API_URL=${{ secrets.STG_VITE_DEATH_API_URL }}" >> .env
-          echo "VITE_SOCKET_URL=${{ secrets.STG_VITE_SOCKET_URL }}" >> .env
+          echo "VITE_AUTH0_DOMAIN=${{ secrets.PROD_AUTH0_DOMAIN }}" >> .env
+          echo "VITE_AUTH0_CLIENT_ID=${{ secrets.PROD_AUTH0_CLIENT_ID }}" >> .env
+          echo "VITE_DEATH_API_URL=${{ secrets.PROD_VITE_DEATH_API_URL }}" >> .env
+          echo "VITE_SOCKET_URL=${{ secrets.PROD_VITE_SOCKET_URL }}" >> .env
+        working-directory: deathma-tv-streamer-web
 
       - name: yarn run build
         run: |
           yarn run build
+        working-directory: deathma-tv-streamer-web
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -57,4 +61,5 @@ jobs:
 
       - name: Copy files to the test website with the AWS CLI
         run: |
-          aws s3 sync ./dist s3://${{ secrets.STG_S3_BACKET_NAME }}
+          aws s3 sync ./dist s3://${{ secrets.PROD_STREAMER_S3_BACKET_NAME }}
+        working-directory: deathma-tv-streamer-web
