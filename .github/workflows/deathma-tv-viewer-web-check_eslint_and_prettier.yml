@@ -1,8 +1,13 @@
-name: Check preitter format.
-on: push
+name: Check eslint format.
+on:
+  push:
+    paths:
+      - "deathma-tv-viewer-web/**/**.js"
+      - "deathma-tv-viewer-web/**/**.ts"
+      - "deathma-tv-viewer-web/**/**.tsx"
 
 jobs:
-  run_prettier:
+  run_eslint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,13 +31,19 @@ jobs:
         with:
           node-version: "16.x"
           cache: yarn
-          cache-dependency-path: "./yarn.lock"
+          cache-dependency-path: "./deathma-tv-viewer-web/yarn.lock"
 
       - name: yarn install
-        # if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install --prefer-offline
+        working-directory: deathma-tv-viewer-web
+
+      - name: Run eslint
+        run: |
+          yarn eslint --ext '.js,.ts' --ignore-path .gitignore .
+        working-directory: deathma-tv-viewer-web
 
       - name: Run prettier
         run: |
           yarn prettier --check .
+        working-directory: deathma-tv-viewer-web
