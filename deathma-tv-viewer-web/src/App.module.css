@@ -1,0 +1,7 @@
+.back {
+  /*background-image: url('https://pbs.twimg.com/media/Dkt3fnqUcAAVaUN.jpg');*/
+  background-image: url('img.png');
+  background-color: rgba(255, 255, 255, 0.9);
+  background-blend-mode: lighten;
+  background-repeat: repeat;
+}

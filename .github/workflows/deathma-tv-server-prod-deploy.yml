@@ -1,0 +1,132 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches-ignore:
+      - "**"
+    tags:
+      - "v*"
+
+jobs:
+  # start:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Slack notification start
+  #       uses: rtCamp/action-slack-notify@v2
+  #       env:
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #         SLACK_CHANNEL: e_2204
+  #         SLACK_USERNAME: deathma-tv-server CI/CD
+  #         SLACK_ICON_EMOJI: ":tv:"
+  #         SLACK_COLOR: ${{ job.status }}
+  #         SLACK_MESSAGE: "START PROD RELEASE"
+
+  build:
+    # needs: start
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out our project.
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        env:
+          AWS_REGION: ap-northeast-1
+        with:
+          aws-access-key-id: ${{ secrets.DEPLOY_CONTAINER_IMAGE_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEPLOY_CONTAINER_IMAGE_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          DOCKER_BUILDKIT: 1
+          API_ECR_REPOSITORY: ${{ secrets.PROD_MOVIE_SERVER_REGISTRY_NAME }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          # Docker コンテナを作成し
+          # ECR にプッシュして
+          # ECS にデプロイできるようにする。
+          docker build \
+          --cache-from=$ECR_REGISTRY/$ECR_REPOSITORY:latest \
+          --build-arg BUILDKIT_INLINE_CACHE=1 \
+          -t $ECR_REGISTRY/$API_ECR_REPOSITORY:$IMAGE_TAG \
+          -f ./hackz-server/movie-server/Dockerfile_prod ./hackz-server/movie-server/ 
+          docker push $ECR_REGISTRY/$API_ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$API_ECR_REPOSITORY:$IMAGE_TAG"
+
+      # - name: Slack notification push complete
+      #   if: ${{ always() }}
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     SLACK_CHANNEL: e_2204
+      #     SLACK_USERNAME: deathma-tv-server CI/CD
+      #     SLACK_ICON_EMOJI: ":tv:"
+      #     SLACK_COLOR: ${{ job.status }}
+      #     SLACK_MESSAGE: "PUSHED PROD IMAGE"
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        env:
+          AWS_REGION: ap-northeast-1
+        with:
+          aws-access-key-id: ${{ secrets.DEPLOY_CONTAINER_TO_EKS_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEPLOY_CONTAINER_TO_EKS_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: deploy to cluster
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.MOVIE_CLUSTER_KUBE_CONFIG }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: prod-movie-server
+          IMAGE_TAG: ${{ github.sha }}
+        with:
+          args: set image deployment/prod-movie-server $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n movie-server
+
+      - name: verify deployment
+        uses: kodermax/kubectl-aws-eks@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.MOVIE_CLUSTER_KUBE_CONFIG }}
+        with:
+          args: rollout status deployment/prod-movie-server -n movie-server
+
+      # - name: Slack notification complete
+      #   if: ${{ always() }}
+      #   uses: rtCamp/action-slack-notify@v2
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     SLACK_CHANNEL: e_2204
+      #     SLACK_USERNAME: deathma-tv-server CI/CD
+      #     SLACK_ICON_EMOJI: ":tv:"
+      #     SLACK_COLOR: ${{ job.status }}
+      #     SLACK_MESSAGE: "COMPLETE PROD ROLLOUT"
+
+  # finish:
+  #   needs: deploy
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Slack notification finish
+  #       uses: rtCamp/action-slack-notify@v2
+  #       env:
+  #         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  #         SLACK_CHANNEL: e_2204
+  #         SLACK_USERNAME: deathma-tv-server CI/CD
+  #         SLACK_ICON_EMOJI: ":tv:"
+  #         SLACK_COLOR: ${{ job.status }}
+  #         SLACK_MESSAGE: "FINISHED PROD RELEASE"

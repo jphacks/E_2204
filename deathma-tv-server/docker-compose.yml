@@ -1,0 +1,25 @@
+version: "3"
+services:
+  user-api:
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+  redis:
+    image: redis:alpine
+    command: redis-server
+  db:
+    image: postgres:alpine
+    restart: unless-stopped
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_USER=oracle
+      - POSTGRES_PASSWORD=oracle
+      - POSTGRES_DB=oracle
+      - TZ=Asia/Tokyo
+
+volumes:
+  db:
