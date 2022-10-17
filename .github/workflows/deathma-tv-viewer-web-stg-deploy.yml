@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "deathma-tv-viewer-web/**"
   repository_dispatch:
     types: [stg-front2-deploy]
 

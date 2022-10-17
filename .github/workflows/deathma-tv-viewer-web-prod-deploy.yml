@@ -6,6 +6,8 @@ on:
       - "**"
     tags:
       - "v*"
+    paths:
+      - "deathma-tv-viewer-web/**"
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
