@@ -1,12 +1,11 @@
-name: Deploy to Staging
+name: Deploy to Production
 
 on:
   push:
-    branches:
-      - main
-  repository_dispatch:
-    types: [stg-front2-deploy]
-
+    branches-ignore:
+      - "**"
+    tags:
+      - "v*"
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -32,21 +31,24 @@ jobs:
         with:
           node-version: "16.x"
           cache: yarn
-          cache-dependency-path: "./yarn.lock"
+          cache-dependency-path: "./deathma-tv-viewer-web/yarn.lock"
 
       - name: yarn install
         # if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: |
           yarn install --prefer-offline
+        working-directory: deathma-tv-viewer-web
 
       - name: create env
         run: |
-          echo "VITE_DEATH_API_URL=${{ secrets.STG_VITE_DEATH_API_URL }}" >> .env
-          echo "VITE_SOCKET_URL=${{ secrets.STG_VITE_SOCKET_URL }}" >> .env
+          echo "VITE_DEATH_API_URL=${{ secrets.PROD_VITE_DEATH_API_URL }}" >> .env
+          echo "VITE_SOCKET_URL=${{ secrets.PROD_VITE_SOCKET_URL }}" >> .env
+        working-directory: deathma-tv-viewer-web
 
       - name: yarn run build
         run: |
           yarn run build
+        working-directory: deathma-tv-viewer-web
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -55,6 +57,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.DEPLOY_TO_S3_AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
-      - name: Copy files to the staging website with the AWS CLI
+      - name: Copy files to the test website with the AWS CLI
         run: |
-          aws s3 sync ./dist s3://${{ secrets.STG_VIEWER_S3_BACKET_NAME }}
+          aws s3 sync ./dist s3://${{ secrets.PROD_VIEWER_S3_BACKET_NAME }}
+        working-directory: deathma-tv-viewer-web
