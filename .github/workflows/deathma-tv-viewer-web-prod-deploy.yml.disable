@@ -1,0 +1,59 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches-ignore:
+      - "**"
+    tags:
+      - "v*"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out our project.
+        uses: actions/checkout@v2
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Node Modules 📦
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Set up Node.js version
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x"
+          cache: yarn
+          cache-dependency-path: "./yarn.lock"
+
+      - name: yarn install
+        # if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: |
+          yarn install --prefer-offline
+
+      - name: create env
+        run: |
+          echo "VITE_DEATH_API_URL=${{ secrets.PROD_VITE_DEATH_API_URL }}" >> .env
+          echo "VITE_SOCKET_URL=${{ secrets.PROD_VITE_SOCKET_URL }}" >> .env
+
+      - name: yarn run build
+        run: |
+          yarn run build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.DEPLOY_TO_S3_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEPLOY_TO_S3_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Copy files to the test website with the AWS CLI
+        run: |
+          aws s3 sync ./dist s3://${{ secrets.PROD_VIEWER_S3_BACKET_NAME }}
