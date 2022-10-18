@@ -52,6 +52,7 @@ jobs:
           tags: ${{ steps.amazon-ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          version: v0.7.0
 
       - name: Move cache
         run: |
