@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "TestECSCluster" {
     }
   }
 
-  name = "TestCluster"
+  name = "deathma-tv-server-cluster"
 
   setting {
     name  = "containerInsights"

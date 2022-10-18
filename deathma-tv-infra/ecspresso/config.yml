@@ -1,6 +1,6 @@
 region: ap-northeast-1
-cluster: TestCluster
-service: TestService
+cluster: deathma-tv-server-cluster
+service: deathma-tv-server-service
 service_definition: ecs-service-def.json
 task_definition: ecs-task-def.json
 timeout: 10m0s
