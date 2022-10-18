@@ -12,6 +12,10 @@ env:
   ECR_REPOSITORY: deathma-tv-server
   IMAGE_TAG: ${{ github.sha }}
 
+defaults:
+  run:
+    working-directory: ./deathma-tv-server
+
 jobs:
   deploy:
     name: Register deathma-tv-server image to AWS ECR
@@ -52,7 +56,6 @@ jobs:
           tags: ${{ steps.amazon-ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-          version: v0.7.0
 
       - name: Move cache
         run: |
