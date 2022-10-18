@@ -1,7 +1,12 @@
-name: Deploy to ECS
+name: Deploy to staging ECS
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - Register docker image to AWS ECR
+    types:
+      - completed
 
 env:
   AWS_REGION: ap-northeast-1
@@ -9,8 +14,9 @@ env:
 
 jobs:
   deploy:
-    name: Deploy to ECS
+    name: Deploy to staging ECS
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Configure aws cerdentials
@@ -29,8 +35,8 @@ jobs:
 
       - name: Register task definition
         run: ecspresso --config config.yml register
-        working-directory: ./ecspresso
+        working-directory: ./deathma-tv-infra/staging/ecspresso
 
       - name: Deploy to ecs
         run: ecspresso --config config.yml deploy --latest-task-definition
-        working-directory: ./ecspresso
+        working-directory: ./deathma-tv-infra/staging/ecspresso

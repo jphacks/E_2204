@@ -1,9 +1,10 @@
-name: Register image to AWS ECR
+name: Register docker image to AWS ECR
 
 on:
   push:
     branches:
       - main
+      - feature/add-fargate-infra
   workflow_dispatch:
 
 env:
@@ -13,7 +14,7 @@ env:
 
 jobs:
   deploy:
-    name: Register image to AWS ECR
+    name: Register deathma-tv-server image to AWS ECR
     runs-on: ubuntu-latest
     steps:
       - name: Configure aws cerdentials
@@ -45,7 +46,7 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           push: true
-          file: ./Dockerfile
+          file: ./deathma-tv-server/Dockerfile
           platforms: linux/arm64
           tags: ${{ steps.amazon-ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
