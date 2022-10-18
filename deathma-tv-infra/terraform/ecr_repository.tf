@@ -8,15 +8,15 @@ resource "aws_ecr_repository" "TestLaravelRepository" {
   }
 
   image_tag_mutability = "MUTABLE"
-  name                 = "test-laravel"
+  name                 = "deathma-tv-server"
 
   tags = {
-    Name  = "test-laravel-repository"
+    Name  = "deathma-tv-server-repository"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-laravel-repository"
+    Name  = "deathma-tv-server-repository"
     Group = "test"
   }
 }

@@ -41,20 +41,20 @@
       "environmentFiles": [],
       "essential": true,
       "extraHosts": [],
-      "image": "{{ tfstate `data.aws_caller_identity.current.account_id` }}.dkr.ecr.ap-northeast-1.amazonaws.com/test-laravel:{{ env `TAG` `latest` }}",
+      "image": "{{ tfstate `data.aws_caller_identity.current.account_id` }}.dkr.ecr.ap-northeast-1.amazonaws.com/deathma-tv-server:{{ env `TAG` `latest` }}",
       "links": [],
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
           "awslogs-create-group": "true",
-          "awslogs-group": "/ecs/test-task-definition-v2",
+          "awslogs-group": "/ecs/deathma-tv-server-task-definition",
           "awslogs-region": "ap-northeast-1",
           "awslogs-stream-prefix": "ecs"
         },
         "secretOptions": []
       },
       "mountPoints": [],
-      "name": "test-laravel",
+      "name": "deathma-tv-server",
       "portMappings": [
         {
           "containerPort": 80,
@@ -70,7 +70,7 @@
   ],
   "cpu": "1024",
   "executionRoleArn": "arn:aws:iam::{{ tfstate `data.aws_caller_identity.current.account_id` }}:role/ecsTaskExecutionRole",
-  "family": "test-task-definition-v2",
+  "family": "deathma-tv-server-task-definition",
   "memory": "2048",
   "networkMode": "awsvpc",
   "placementConstraints": [],
@@ -86,7 +86,7 @@
     },
     {
       "key": "Name",
-      "value": "test-laravel-task-definition-v2"
+      "value": "deathma-tv-server-task-definition"
     }
   ],
   "taskRoleArn": "arn:aws:iam::{{ tfstate `data.aws_caller_identity.current.account_id` }}:role/ecsTaskExecutionRole",

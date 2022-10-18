@@ -14,7 +14,7 @@
   "launchType": "FARGATE",
   "loadBalancers": [
     {
-      "containerName": "test-laravel",
+      "containerName": "deathma-tv-server",
       "containerPort": 80,
       "targetGroupArn": "{{ tfstate `aws_lb_target_group.TestTG.arn` }}"
     }
