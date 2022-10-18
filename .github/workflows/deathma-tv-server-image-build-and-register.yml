@@ -68,6 +68,7 @@ jobs:
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
+    needs: build-and-register
     name: Deploy to staging ECS
     runs-on: ubuntu-latest
 
