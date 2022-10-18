@@ -8,36 +8,7 @@
       "dockerLabels": {},
       "dockerSecurityOptions": [],
       "entryPoint": [],
-      "environment": [
-        {
-          "name": "DB_USERNAME",
-          "value": "{{ tfstate `aws_db_instance.TestPostgres.username` }}"
-        },
-        {
-          "name": "DB_PORT",
-          "value": "{{ tfstate `aws_db_instance.TestPostgres.port` }}"
-        },
-        {
-          "name": "DB_CONNECTION",
-          "value": "pgsql"
-        },
-        {
-          "name": "APP_KEY",
-          "value": "base64:2EOJ2lyHVwzpq8Zr2d6nR5hdlaxVo3CAlbsMI0V2JZI="
-        },
-        {
-          "name": "DB_HOST",
-          "value": "{{ tfstate `aws_db_instance.TestPostgres.address` }}"
-        },
-        {
-          "name": "DB_DATABASE",
-          "value": "{{ tfstate `aws_db_instance.TestPostgres.db_name` }}"
-        },
-        {
-          "name": "DB_PASSWORD",
-          "value": "{{ tfstate `aws_db_instance.TestPostgres.password` }}"
-        }
-      ],
+      "environment": [],
       "environmentFiles": [],
       "essential": true,
       "extraHosts": [],
