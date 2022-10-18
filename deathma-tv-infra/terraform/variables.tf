@@ -1,14 +1,14 @@
-data "terraform_remote_state" "variables" {
-  backend = "s3"
-
-  config = {
-    bucket = "yukinissie-tfstate"
-    key    = "test-ecs-infra/terraform.tfstate"
-    region = "ap-northeast-1"
-  }
+variable "CERTIFICATE_ARN" {
+  type        = string
+  description = "SSL Certificate arn for ALB"
 }
 
-variable "CERTIFICATE_ARN" { 
-    type = string 
-    description = "SSL Certificate arn for ALB"
+variable "TFSTATE_S3_BUCKET_NAME" {
+  type        = string
+  description = "S3 bucket name for tfstate"
+}
+
+variable "TFSTATE_S3_BUCKET_KEY" {
+  type        = string
+  description = "S3 bucket key for tfstate"
 }

@@ -10,8 +10,8 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "yukinissie-tfstate"
-    key    = "test-ecs-infra/terraform.tfstate"
+    bucket = var.TFSTATE_S3_BUCKET_NAME
+    key    = var.TFSTATE_S3_BUCKET_KEY
     region = "ap-northeast-1"
   }
 }
