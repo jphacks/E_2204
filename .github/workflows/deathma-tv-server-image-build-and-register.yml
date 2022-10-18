@@ -50,8 +50,7 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           push: true
-          context: ./deathma-tv-server
-          file: deathma-tv-server/Dockerfile
+          file: ./Dockerfile
           platforms: linux/arm64
           tags: ${{ steps.amazon-ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
