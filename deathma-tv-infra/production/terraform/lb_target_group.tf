@@ -14,7 +14,7 @@ resource "aws_lb_target_group" "TestTG" {
   }
 
   load_balancing_algorithm_type = "round_robin"
-  name                          = "TestTG"
+  name                          = "prod-TestTG"
   port                          = "80"
   protocol                      = "HTTP"
   protocol_version              = "HTTP1"
@@ -27,12 +27,12 @@ resource "aws_lb_target_group" "TestTG" {
   }
 
   tags = {
-    Name  = "test-backend-ecs-alb-targate-group"
+    Name  = "prod-test-backend-ecs-alb-targate-group"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-backend-ecs-alb-targate-group"
+    Name  = "prod-test-backend-ecs-alb-targate-group"
     Group = "test"
   }
 

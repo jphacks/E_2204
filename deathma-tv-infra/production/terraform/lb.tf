@@ -8,7 +8,7 @@ resource "aws_lb" "TestALB" {
   internal                   = "false"
   ip_address_type            = "ipv4"
   load_balancer_type         = "application"
-  name                       = "TestALB"
+  name                       = "prod-TestALB"
   preserve_host_header       = "false"
   security_groups            = [aws_security_group.TestALBSecurityGroup.id]
 
@@ -21,12 +21,12 @@ resource "aws_lb" "TestALB" {
   }
 
   tags = {
-    Name  = "test-backend-ecs-alb"
+    Name  = "prod-test-backend-ecs-alb"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-backend-ecs-alb"
+    Name  = "prod-test-backend-ecs-alb"
     Group = "test"
   }
 }

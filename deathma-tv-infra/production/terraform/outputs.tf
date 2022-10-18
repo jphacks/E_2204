@@ -86,9 +86,9 @@ output "aws_route_table_association_TestPrivateSubnet2_id" {
 
 # db
 # rds
-output "aws_db_instance_TestPostgres_id" {
-  value = aws_db_instance.TestPostgres.id
-}
+# output "aws_db_instance_TestPostgres_id" {
+#   value = aws_db_instance.TestPostgres.id
+# }
 
 output "aws_db_subnet_group_TestDBSubnetGroup_id" {
   value = aws_db_subnet_group.TestDBSubnetGroup.id

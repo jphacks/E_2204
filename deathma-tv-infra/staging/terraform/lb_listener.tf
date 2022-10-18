@@ -9,12 +9,12 @@ resource "aws_lb_listener" "TestBackendECSIbListernerHttp" {
   protocol          = "HTTP"
 
   tags = {
-    Name  = "test-backend-ecs-lb-listerner-http"
+    Name  = "stg-test-backend-ecs-lb-listerner-http"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-backend-ecs-lb-listerner-http"
+    Name  = "stg-test-backend-ecs-lb-listerner-http"
     Group = "test"
   }
 }
@@ -33,12 +33,12 @@ resource "aws_lb_listener" "TestBackendECSIbListernerHttps" {
   ssl_policy        = "ELBSecurityPolicy-2016-08"
 
   tags = {
-    Name  = "test-backend-ecs-lb-listerner-https"
+    Name  = "stg-test-backend-ecs-lb-listerner-https"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-backend-ecs-lb-listerner-https"
+    Name  = "stg-test-backend-ecs-lb-listerner-https"
     Group = "test"
   }
 }

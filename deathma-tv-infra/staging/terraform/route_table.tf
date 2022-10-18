@@ -5,12 +5,12 @@ resource "aws_route_table" "TestPublicRouteTable" {
   }
 
   tags = {
-    Name  = "TestProgect-rtb-public"
+    Name  = "stg-TestProgect-rtb-public"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-rtb-public"
+    Name  = "stg-TestProgect-rtb-public"
     Group = "test"
   }
 
@@ -19,12 +19,12 @@ resource "aws_route_table" "TestPublicRouteTable" {
 
 resource "aws_route_table" "TestPrivateRouteTable" {
   tags = {
-    Name  = "TestProgect-rtb-private"
+    Name  = "stg-TestProgect-rtb-private"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-rtb-private"
+    Name  = "stg-TestProgect-rtb-private"
     Group = "test"
   }
 

@@ -10,12 +10,12 @@ resource "aws_subnet" "TestPublicSubnet1" {
   availability_zone                              = "ap-northeast-1a"
 
   tags = {
-    Name  = "TestProgect-subnet-public1-ap-northeast-1a"
+    Name  = "stg-TestProgect-subnet-public1-ap-northeast-1a"
     group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-subnet-public1-ap-northeast-1a"
+    Name  = "stg-TestProgect-subnet-public1-ap-northeast-1a"
     group = "test"
   }
 
@@ -34,12 +34,12 @@ resource "aws_subnet" "TestPublicSubnet2" {
   availability_zone                              = "ap-northeast-1c"
 
   tags = {
-    Name  = "TestProgect-subnet-public2-ap-northeast-1c"
+    Name  = "stg-TestProgect-subnet-public2-ap-northeast-1c"
     group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-subnet-public2-ap-northeast-1c"
+    Name  = "stg-TestProgect-subnet-public2-ap-northeast-1c"
     group = "test"
   }
 
@@ -58,12 +58,12 @@ resource "aws_subnet" "TestPrivateSubnet1" {
   availability_zone                              = "ap-northeast-1a"
 
   tags = {
-    Name  = "TestProgect-subnet-private1-ap-northeast-1a"
+    Name  = "stg-TestProgect-subnet-private1-ap-northeast-1a"
     group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-subnet-private1-ap-northeast-1a"
+    Name  = "stg-TestProgect-subnet-private1-ap-northeast-1a"
     group = "test"
   }
 
@@ -82,12 +82,12 @@ resource "aws_subnet" "TestPrivateSubnet2" {
   availability_zone                              = "ap-northeast-1c"
 
   tags = {
-    Name  = "TestProgect-subnet-private2-ap-northeast-1c"
+    Name  = "stg-TestProgect-subnet-private2-ap-northeast-1c"
     group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-subnet-private2-ap-northeast-1c"
+    Name  = "stg-TestProgect-subnet-private2-ap-northeast-1c"
     group = "test"
   }
 

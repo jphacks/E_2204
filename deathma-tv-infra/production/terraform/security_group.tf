@@ -1,5 +1,5 @@
 resource "aws_security_group" "TestALBSecurityGroup" {
-  description = "TestALBSG"
+  description = "prod-TestALBSG"
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
@@ -25,15 +25,15 @@ resource "aws_security_group" "TestALBSecurityGroup" {
     to_port     = "80"
   }
 
-  name = "TestALBSecurityGroup"
+  name = "prod-TestALBSecurityGroup"
 
   tags = {
-    Name  = "test-alb-security-group"
+    Name  = "prod-test-alb-security-group"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-alb-security-group"
+    Name  = "prod-test-alb-security-group"
     Group = "test"
   }
 
@@ -62,15 +62,15 @@ resource "aws_security_group" "TestPostgresSecurityGroup" {
     to_port   = "5432"
   }
 
-  name = "TestPostgresSecurityGroup"
+  name = "prod-TestPostgresSecurityGroup"
 
   tags = {
-    Name  = "test-postgres-security-group"
+    Name  = "prod-test-postgres-security-group"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-postgres-security-group"
+    Name  = "prod-test-postgres-security-group"
     Group = "test"
   }
 
@@ -78,7 +78,7 @@ resource "aws_security_group" "TestPostgresSecurityGroup" {
 }
 
 resource "aws_security_group" "TestECSTaskSecurityGroup" {
-  description = "TestECSTaskSecurityGroup"
+  description = "prod-TestECSTaskSecurityGroup"
 
   egress {
     cidr_blocks = ["0.0.0.0/0"]
@@ -96,15 +96,15 @@ resource "aws_security_group" "TestECSTaskSecurityGroup" {
     to_port     = "80"
   }
 
-  name = "TestECSTaskSecurityGroup"
+  name = "prod-TestECSTaskSecurityGroup"
 
   tags = {
-    Name  = "test-ecs-task-security-group"
+    Name  = "prod-test-ecs-task-security-group"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "test-ecs-task-security-group"
+    Name  = "prod-test-ecs-task-security-group"
     Group = "test"
   }
 

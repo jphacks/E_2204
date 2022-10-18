@@ -8,12 +8,12 @@ resource "aws_vpc" "TestVPC" {
   instance_tenancy                 = "default"
 
   tags = {
-    Name  = "TestProgect-vpc"
+    Name  = "prod-TestProgect-vpc"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-vpc"
+    Name  = "prod-TestProgect-vpc"
     Group = "test"
   }
 }

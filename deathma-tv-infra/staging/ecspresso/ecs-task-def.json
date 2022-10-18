@@ -47,7 +47,7 @@
         "logDriver": "awslogs",
         "options": {
           "awslogs-create-group": "true",
-          "awslogs-group": "/ecs/deathma-tv-server-task-definition",
+          "awslogs-group": "/ecs/stg-deathma-tv-server-task-definition",
           "awslogs-region": "ap-northeast-1",
           "awslogs-stream-prefix": "ecs"
         },
@@ -70,7 +70,7 @@
   ],
   "cpu": "1024",
   "executionRoleArn": "arn:aws:iam::{{ tfstate `data.aws_caller_identity.current.account_id` }}:role/ecsTaskExecutionRole",
-  "family": "deathma-tv-server-task-definition",
+  "family": "stg-deathma-tv-server-task-definition",
   "memory": "2048",
   "networkMode": "awsvpc",
   "placementConstraints": [],
@@ -86,7 +86,7 @@
     },
     {
       "key": "Name",
-      "value": "deathma-tv-server-task-definition"
+      "value": "stg-deathma-tv-server-task-definition"
     }
   ],
   "taskRoleArn": "arn:aws:iam::{{ tfstate `data.aws_caller_identity.current.account_id` }}:role/ecsTaskExecutionRole",

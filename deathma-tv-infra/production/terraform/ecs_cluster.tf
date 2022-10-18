@@ -5,7 +5,7 @@ resource "aws_ecs_cluster" "TestECSCluster" {
     }
   }
 
-  name = "deathma-tv-server-cluster"
+  name = "prod-deathma-tv-server-cluster"
 
   setting {
     name  = "containerInsights"
@@ -14,13 +14,13 @@ resource "aws_ecs_cluster" "TestECSCluster" {
 
   tags = {
     "ecs:cluster:createdFrom" = "ecs-console-v2"
-    Name                      = "test-ecs-cluster"
+    Name                      = "prod-test-ecs-cluster"
     Group                     = "test"
   }
 
   tags_all = {
     "ecs:cluster:createdFrom" = "ecs-console-v2"
-    Name                      = "test-ecs-cluster"
+    Name                      = "prod-test-ecs-cluster"
     Group                     = "test"
   }
 }

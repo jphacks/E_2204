@@ -1,11 +1,11 @@
 resource "aws_internet_gateway" "TestIGW" {
   tags = {
-    Name  = "TestProgect-igw"
+    Name  = "prod-TestProgect-igw"
     Group = "test"
   }
 
   tags_all = {
-    Name  = "TestProgect-igw"
+    Name  = "prod-TestProgect-igw"
     Group = "test"
   }
 
