@@ -13,7 +13,7 @@ env:
   IMAGE_TAG: ${{ github.sha }}
 
 jobs:
-  deploy:
+  build-and-register:
     name: Register deathma-tv-server image to AWS ECR
     runs-on: ubuntu-latest
     steps:
@@ -66,3 +66,30 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+
+  deploy:
+    name: Deploy to staging ECS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure aws cerdentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: actions/checkout@v3
+
+      - name: Download ecspresso
+        uses: kayac/ecspresso@v1
+        with:
+          version: v1.7.12
+
+      - name: Register task definition
+        run: ecspresso --config config.yml register
+        working-directory: ./deathma-tv-infra/staging/ecspresso
+
+      - name: Deploy to ecs
+        run: ecspresso --config config.yml deploy --latest-task-definition
+        working-directory: ./deathma-tv-infra/staging/ecspresso
