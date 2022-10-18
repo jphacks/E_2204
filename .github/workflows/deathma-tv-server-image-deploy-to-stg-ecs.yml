@@ -3,8 +3,7 @@ name: Deploy to staging ECS
 on:
   workflow_dispatch:
   workflow_run:
-    workflows:
-      - Register docker image to AWS ECR
+    workflows: ["Register docker image to AWS ECR"]
     types:
       - completed
 
