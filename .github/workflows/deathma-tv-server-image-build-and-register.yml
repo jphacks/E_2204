@@ -17,6 +17,7 @@ jobs:
     name: Register deathma-tv-server image to AWS ECR
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Configure aws cerdentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -43,28 +44,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      # - uses: docker/build-push-action@v3
-      #   with:
-      #     push: true
-      #     context: ./
-      #     file: ./deathma-tv-server/Dockefile
-      #     platforms: linux/arm64
-      #     tags: ${{ steps.amazon-ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
-      #     cache-from: type=local,src=/tmp/.buildx-cache
-      #     cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+      - uses: docker/build-push-action@v3
+        with:
+          push: true
+          context: deathma-tv-server
+          platforms: linux/arm64
+          tags: ${{ steps.amazon-ecr-login.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.amazon-ecr-login.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          ls
-
-
-          # cd deathma-tv-server
-          # docker buildx build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .--cache-from type=local,src=/tmp/.buildx-cache --cache-to type=local,dest=/tmp/.buildx-cache-new,mode=max --platform linux/arm64 --push .
-          # docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      # - name: Build, tag, and push image to Amazon ECR
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.amazon-ecr-login.outputs.registry }}
+      #     ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+      #     IMAGE_TAG: ${{ github.sha }}
+      #   run: |
+      #     docker buildx build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .--cache-from type=local,src=/tmp/.buildx-cache --cache-to type=local,dest=/tmp/.buildx-cache-new,mode=max --platform linux/arm64 --push .
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Move cache
         run: |
