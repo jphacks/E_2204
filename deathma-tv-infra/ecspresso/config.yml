@@ -1,0 +1,10 @@
+region: ap-northeast-1
+cluster: TestCluster
+service: TestService
+service_definition: ecs-service-def.json
+task_definition: ecs-task-def.json
+timeout: 10m0s
+plugins:
+  - name: tfstate
+    config:
+      url: s3://yukinissie-tfstate/test-ecs-infra/terraform.tfstate
