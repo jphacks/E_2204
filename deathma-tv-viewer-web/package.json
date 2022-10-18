@@ -56,15 +56,6 @@
   "license": "MIT",
   "description": "React app template.",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yukinissie/react-template.git"
-  },
-  "author": "yukinissie <bigtree2490@outlook.jp>",
-  "bugs": {
-    "url": "https://github.com/yukinissie/react-template/issues"
-  },
-  "homepage": "https://github.com/yukinissie/react-template#readme",
   "optionalDependencies": {
     "bufferutil": "^4.0.6",
     "utf-8-validate": "^5.0.9"
