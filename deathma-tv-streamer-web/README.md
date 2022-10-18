@@ -1,4 +1,4 @@
-# stdin
+# streamer-web
 
 ## installation
 

@@ -1,4 +1,4 @@
-# stdin
+# viewer-web
 
 ## installation
 
