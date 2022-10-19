@@ -8,7 +8,12 @@
       "dockerLabels": {},
       "dockerSecurityOptions": [],
       "entryPoint": [],
-      "environment": [],
+      "environment": [
+        {
+          "name": "API_TOKEN",
+          "value": "{{ env `GH_API_TOKEN` `token` }}"
+        }
+      ],
       "environmentFiles": [],
       "essential": true,
       "extraHosts": [],
