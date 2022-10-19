@@ -5,9 +5,11 @@ on:
     branches-ignore:
       - "**"
     tags:
-      - "v*"
+      - "v*_viewer_web"
     paths:
       - "deathma-tv-viewer-web/**"
+  workflow_dispatch:
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

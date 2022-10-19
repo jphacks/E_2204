@@ -1,6 +1,13 @@
 name: Deploy to production ECS
 
 on:
+  push:
+    branches-ignore:
+      - "**"
+    tags:
+      - "v*_server"
+    paths:
+      - "deathma-tv-server/**"
   workflow_dispatch:
 
 env:
