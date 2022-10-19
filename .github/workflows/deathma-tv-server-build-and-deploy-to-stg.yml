@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "deathma-tv-server/**"
   workflow_dispatch:
 
 env:
