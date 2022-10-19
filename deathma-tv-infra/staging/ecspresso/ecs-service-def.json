@@ -15,7 +15,7 @@
   "loadBalancers": [
     {
       "containerName": "deathma-tv-server",
-      "containerPort": 80,
+      "containerPort": 8080,
       "targetGroupArn": "{{ tfstate `aws_lb_target_group.TestTG.arn` }}"
     }
   ],
