@@ -1,4 +1,4 @@
-name: Deploy to Production
+name: Deploy deathma-tv-viewer-web to Production.
 
 on:
   push:

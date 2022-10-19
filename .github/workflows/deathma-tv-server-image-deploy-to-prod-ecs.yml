@@ -1,4 +1,4 @@
-name: Deploy to production ECS
+name: Deploy deathma-tv-server to Production.
 
 on:
   push:

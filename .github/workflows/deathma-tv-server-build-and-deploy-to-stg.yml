@@ -1,4 +1,4 @@
-name: Register docker image to AWS ECR
+name: Build and Deploy deathma-tv-server to Staging.
 
 on:
   push:
