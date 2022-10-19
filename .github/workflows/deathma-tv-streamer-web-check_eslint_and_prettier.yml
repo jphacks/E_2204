@@ -1,4 +1,4 @@
-name: Check eslint format.
+name: Check deathma-tv-streamer-web eslint and prettier format.
 on:
   push:
     paths:

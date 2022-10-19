@@ -1,0 +1,10 @@
+region: ap-northeast-1
+cluster: stg-deathma-tv-server-cluster
+service: stg-deathma-tv-server-service
+service_definition: ecs-service-def.json
+task_definition: ecs-task-def.json
+timeout: 10m0s
+plugins:
+  - name: tfstate
+    config:
+      url: s3://{{ env "TFSTATE_S3_BUCKET_NAME" "yukinissie-tfstate" }}/{{ env "TFSTATE_S3_BUCKET_KEY" "deathma-tv-infra/staging.tfstate" }}

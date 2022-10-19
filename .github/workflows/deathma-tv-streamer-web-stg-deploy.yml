@@ -1,4 +1,4 @@
-name: Deploy to Staging
+name: Deploy deathma-tv-streamer-web to Staging.
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "deathma-tv-streamer-web/**"
-  repository_dispatch:
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:

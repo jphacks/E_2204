@@ -1,0 +1,65 @@
+{
+  "containerDefinitions": [
+    {
+      "command": [],
+      "cpu": 0,
+      "dnsSearchDomains": [],
+      "dnsServers": [],
+      "dockerLabels": {},
+      "dockerSecurityOptions": [],
+      "entryPoint": [],
+      "environment": [],
+      "environmentFiles": [],
+      "essential": true,
+      "extraHosts": [],
+      "image": "{{ tfstate `data.aws_caller_identity.current.account_id` }}.dkr.ecr.ap-northeast-1.amazonaws.com/deathma-tv-server:{{ env `TAG` `latest` }}",
+      "links": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/stg-deathma-tv-server-task-definition",
+          "awslogs-region": "ap-northeast-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      },
+      "mountPoints": [],
+      "name": "deathma-tv-server",
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "secrets": [],
+      "systemControls": [],
+      "ulimits": [],
+      "volumesFrom": []
+    }
+  ],
+  "cpu": "1024",
+  "executionRoleArn": "arn:aws:iam::{{ tfstate `data.aws_caller_identity.current.account_id` }}:role/ecsTaskExecutionRole",
+  "family": "stg-deathma-tv-server-task-definition",
+  "memory": "2048",
+  "networkMode": "awsvpc",
+  "placementConstraints": [],
+  "requiresCompatibilities": ["FARGATE"],
+  "runtimePlatform": {
+    "cpuArchitecture": "ARM64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "tags": [
+    {
+      "key": "Group",
+      "value": "test"
+    },
+    {
+      "key": "Name",
+      "value": "stg-deathma-tv-server-task-definition"
+    }
+  ],
+  "taskRoleArn": "arn:aws:iam::{{ tfstate `data.aws_caller_identity.current.account_id` }}:role/ecsTaskExecutionRole",
+  "volumes": []
+}

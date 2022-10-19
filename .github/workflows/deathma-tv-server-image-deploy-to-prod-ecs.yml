@@ -1,0 +1,43 @@
+name: Deploy deathma-tv-server to Production.
+
+on:
+  push:
+    branches-ignore:
+      - "**"
+    tags:
+      - "v*_server"
+    paths:
+      - "deathma-tv-server/**"
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ap-northeast-1
+  IMAGE_TAG: latest
+
+jobs:
+  deploy:
+    name: Deploy to staging ECS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure aws cerdentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - uses: actions/checkout@v3
+
+      - name: Download ecspresso
+        uses: kayac/ecspresso@v1
+        with:
+          version: v1.7.12
+
+      - name: Register task definition
+        run: ecspresso --config config.yml register
+        working-directory: ./deathma-tv-infra/production/ecspresso
+
+      - name: Deploy to ecs
+        run: ecspresso --config config.yml deploy --latest-task-definition
+        working-directory: ./deathma-tv-infra/production/ecspresso
