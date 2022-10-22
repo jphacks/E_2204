@@ -34,7 +34,7 @@ session = InferenceSession(onnx_path)
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    MAX_TOKEN_COUNT = 512
+    MAX_TOKEN_COUNT = 256
     
     items: Dict[str, Any] = req.get_json()
     logging.info("{}, {}".format(items, type(items)))
