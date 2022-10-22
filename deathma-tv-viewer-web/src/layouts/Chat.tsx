@@ -11,7 +11,24 @@ interface Props {
   text: string
 }
 
+export interface Emotions {
+  joy: number
+  sadness: number
+  anticipation: number
+  surprise: number
+  anger: number
+  fear: number
+  disgust: number
+  trust: number
+}
+
 const initState: Props = { name: '', text: '' }
+
+interface ChatProps {
+  name: string
+  text: string
+  emotions: Emotions
+}
 
 export const Chat = (state: Props = initState) => {
   const [play, { stop, pause }] = useSound(Sound)
@@ -78,8 +95,15 @@ export const Chat = (state: Props = initState) => {
           {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
-            messages.map((msg: Props, idx: number) => {
-              return <Message key={idx} name={msg.name} message={msg.text} />
+            messages.map((msg: ChatProps, idx: number) => {
+              return (
+                <Message
+                  key={idx}
+                  name={msg.name}
+                  message={msg.text}
+                  emotions={msg.emotions}
+                />
+              )
             })
           }
           <div ref={scrollBottomRef}></div>
