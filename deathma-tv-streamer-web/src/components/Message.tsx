@@ -99,6 +99,10 @@ function colorChanger(emotions: Emotions) {
   let emotion = ''
   arr.forEach((a) => {
     if (a.value === Math.max.apply(null, result)) {
+      if (Math.max.apply(null, result) < 0.1) {
+        emotion = ''
+        return
+      }
       emotion = a.key
     }
   })
