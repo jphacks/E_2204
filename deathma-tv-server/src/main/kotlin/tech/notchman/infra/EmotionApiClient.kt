@@ -19,8 +19,7 @@ class EmotionApiClient {
     private val client = OkHttpClient.Builder().build()
 
     fun getEmotions(text: String): String {
-//        val sendDataJson = "{\"text\":\"${text}\"}"
-        val sendDataJson = "{\"text\":\"aaa\"}"
+        val sendDataJson = "{\"text\":\"${text}\"}"
         val request = Request.Builder().url(BASE_URL).post(sendDataJson.toRequestBody(JSON_MEDIA)).build()
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {

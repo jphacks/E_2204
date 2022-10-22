@@ -41,7 +41,6 @@ export const Message = (state: Props = initState) => {
       >
         <p>{state.name}</p>
         <p>{format(new Date(), 'yyyy/MM/dd HH:mm', { locale: ja })}</p>
-        <p>{state.emotions && state.emotions.joy}</p>
       </div>
     </div>
   )
@@ -59,7 +58,6 @@ const Color = {
 }
 
 function colorChanger(emotions: Emotions) {
-  console.log(emotions)
   const arr = [
     {
       key: 'joy',
@@ -97,11 +95,14 @@ function colorChanger(emotions: Emotions) {
   const result = arr.map(function (p) {
     return p.value
   })
-  console.log(Math.max.apply(null, result)) // 25
 
   let emotion = ''
   arr.forEach((a) => {
     if (a.value === Math.max.apply(null, result)) {
+      if (Math.max.apply(null, result) < 0.1) {
+        emotion = ''
+        return
+      }
       emotion = a.key
     }
   })
