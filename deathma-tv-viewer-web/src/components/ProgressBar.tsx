@@ -25,6 +25,18 @@ export const ProgressBar = () => {
     progress: 0,
   })
   useEffect(() => {
+    instance
+      .get(proggressApi)
+      .then((response) => {
+        console.log('get progress')
+        console.log(JSON.parse(response.data))
+        setProgress(JSON.parse(response.data))
+      })
+      .catch(() => {
+        console.log('通信に失敗しました')
+      })
+  }, [])
+  useEffect(() => {
     const intervalId = setInterval(() => {
       instance
         .get(proggressApi)
@@ -33,7 +45,7 @@ export const ProgressBar = () => {
           setCount(count + 1)
 
           console.log(count + ' ' + response.data)
-        }) //成功した場合、postsを更新する（then）
+        })
         .catch(() => {
           console.log('通信に失敗しました')
         })
