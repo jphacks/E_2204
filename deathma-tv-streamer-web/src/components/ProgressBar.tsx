@@ -9,7 +9,7 @@ interface Progress {
   progress: number
 }
 
-const intervalMs = 60000
+const intervalMs = 6000
 
 export const ProgressBar = () => {
   const DEATH_API_URL =

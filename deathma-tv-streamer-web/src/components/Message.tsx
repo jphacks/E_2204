@@ -41,57 +41,88 @@ export const Message = (state: Props = initState) => {
       >
         <p>{state.name}</p>
         <p>{format(new Date(), 'yyyy/MM/dd HH:mm', { locale: ja })}</p>
-        <p>{state.emotions && state.emotions.joy}</p>
       </div>
     </div>
   )
 }
 
-interface Color {
-  Joy: 'yellow'
-  Sadness: '#77FFFF'
-  Anticipation: 'yellow'
-  Surprise: 'red'
-  Anger: 'red'
-  Fear: 'blue'
-  Disgust: 'red'
-  Trust: 'yellow'
+const Color = {
+  Joy: 'yellow',
+  Sadness: '#77FFFF',
+  Anticipation: 'yellow',
+  Surprise: 'red',
+  Anger: 'red',
+  Fear: 'blue',
+  Disgust: 'red',
+  Trust: 'yellow',
 }
 
 function colorChanger(emotions: Emotions) {
-  console.log(emotions)
   const arr = [
     {
+      key: 'joy',
       value: emotions.joy,
     },
     {
+      key: 'sadness',
       value: emotions.sadness,
     },
     {
+      key: 'anticipation',
       value: emotions.anticipation,
     },
     {
+      key: 'surprise',
       value: emotions.surprise,
     },
     {
+      key: 'anger',
       value: emotions.anger,
     },
     {
+      key: 'fear',
       value: emotions.fear,
     },
     {
+      key: 'disgust',
       value: emotions.disgust,
     },
     {
+      key: 'trust',
       value: emotions.trust,
     },
   ]
-  var result = arr.map(function (p) {
+  const result = arr.map(function (p) {
     return p.value
   })
-  console.log(Math.max.apply(null, result)) // 25
 
-  return '#000000'
+  let emotion = ''
+  arr.forEach((a) => {
+    if (a.value === Math.max.apply(null, result)) {
+      emotion = a.key
+    }
+  })
+
+  switch (emotion) {
+    case 'joy':
+      return Color.Joy
+    case 'sadness':
+      return Color.Sadness
+    case 'anticipation':
+      return Color.Anticipation
+    case 'surprise':
+      return Color.Surprise
+    case 'anger':
+      return Color.Anger
+    case 'fear':
+      return Color.Fear
+    case 'disgust':
+      return Color.Disgust
+    case 'trust':
+      return Color.Trust
+    default:
+      return '#e0e0e0'
+  }
 }
 
 const style = {
