@@ -1,5 +1,6 @@
 package tech.notchman.plugins
 
+import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.server.application.*
 import io.ktor.server.plugins.autohead.*
 import io.ktor.server.response.*
@@ -16,6 +17,8 @@ fun Application.configureRouting() {
     install(AutoHeadResponse)
     val apiClient = ApiClient()
     val apiController = ApiController(apiClient)
+    log.info("Hello from module!")
+
     routing {
         get("/") {
             call.respondText("Hello World!!")

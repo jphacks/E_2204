@@ -20,7 +20,7 @@ class ApiClient {
     fun getIssues(): Issues {
         val token = config.apiToken
         val request =
-            Request.Builder().url(BASE_URL + "repos/Romira915/private-isu/issues?state=all")
+            Request.Builder().url(BASE_URL + "repos/jphacks/E_2204/issues?state=all")
                 .header("Authorization", "Bearer $token").build()
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {

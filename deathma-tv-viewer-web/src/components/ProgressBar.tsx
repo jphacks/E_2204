@@ -9,7 +9,7 @@ interface Progress {
   progress: number
 }
 
-const intervalMs = 60000
+const intervalMs = 6000
 
 export const ProgressBar = () => {
   const DEATH_API_URL =
@@ -25,6 +25,18 @@ export const ProgressBar = () => {
     progress: 0,
   })
   useEffect(() => {
+    instance
+      .get(proggressApi)
+      .then((response) => {
+        console.log('get progress')
+        console.log(JSON.parse(response.data))
+        setProgress(JSON.parse(response.data))
+      })
+      .catch(() => {
+        console.log('通信に失敗しました')
+      })
+  }, [])
+  useEffect(() => {
     const intervalId = setInterval(() => {
       instance
         .get(proggressApi)
@@ -33,16 +45,16 @@ export const ProgressBar = () => {
           setCount(count + 1)
 
           console.log(count + ' ' + response.data)
-        }) //成功した場合、postsを更新する（then）
+        })
         .catch(() => {
           console.log('通信に失敗しました')
         })
     }, intervalMs)
 
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [progress])
+  //   return () => {
+  //     clearInterval(intervalId)
+  //   }
+  // }, [progress])
 
   return (
     <div>

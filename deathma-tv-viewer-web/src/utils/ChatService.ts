@@ -68,6 +68,16 @@ export const ChatService = (props: Props) => {
       text: props.text,
       action: props.action,
       id: randomStr,
+      emotions: {
+        joy: 0,
+        sadness: 0,
+        anticipation: 0,
+        surprise: 0,
+        anger: 0,
+        fear: 0,
+        disgust: 0,
+        trust: 0,
+      },
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
