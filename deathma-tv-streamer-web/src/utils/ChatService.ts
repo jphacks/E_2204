@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 interface Props {
   name: string
   text: string
+  action: string
 }
 
 export const ChatService = (props: Props) => {
@@ -52,6 +53,18 @@ export const ChatService = (props: Props) => {
     const aMessage = {
       name: props.name,
       text: props.text,
+      action: 'SEND_MESSAGE',
+      id: 'randomStr',
+      emotions: {
+        joy: 0,
+        sadness: 0,
+        anticipation: 0,
+        surprise: 0,
+        anger: 0,
+        fear: 0,
+        disgust: 0,
+        trust: 0,
+      },
     }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore

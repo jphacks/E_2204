@@ -1,10 +1,17 @@
 package tech.notchman.plugins
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import tech.notchman.infra.Connection
+import tech.notchman.infra.EmotionApiClient
+import tech.notchman.model.ChatMessage
+import tech.notchman.model.EmotionsResponse
 import tech.notchman.repository.ChatRepository
 import java.time.Duration
 import java.util.*
@@ -17,6 +24,7 @@ fun Application.configureSockets() {
         masking = false
     }
     val chatRepository = ChatRepository();
+    val apiClient = EmotionApiClient()
 
     routing {
         //ルームの振り分け格納
@@ -28,14 +36,19 @@ fun Application.configureSockets() {
             val chatId = call.parameters["chat_id"]
             outgoing.send(Frame.Text("YOUR CHAT ROOM: $chatId"))
             try {
+                val mapper = jacksonObjectMapper()
                 send("You are connected! There are ${thisConnections.count()} users here.")
                 for (frame in incoming) {
                     frame as? Frame.Text ?: continue
                     val receivedText = frame.readText()
+                    val chatMessage = mapper.readValue<ChatMessage>(receivedText)
+                    val emotions = apiClient.getEmotions(chatMessage.text)
+                    val emotionsResponse = mapper.readValue<EmotionsResponse>(emotions)
+                    chatMessage.emotions = emotionsResponse.result
                     thisConnections.forEach {
                         try {
-                            it.session.send(receivedText)
-                        }catch(e:Exception){
+                            it.session.send(Json.encodeToString(chatMessage))
+                        } catch (e: Exception) {
 
                         }
                     }

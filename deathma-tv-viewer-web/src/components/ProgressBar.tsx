@@ -51,10 +51,10 @@ export const ProgressBar = () => {
         })
     }, intervalMs)
 
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [progress])
+  //   return () => {
+  //     clearInterval(intervalId)
+  //   }
+  // }, [progress])
 
   return (
     <div>

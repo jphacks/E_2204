@@ -2,17 +2,37 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { Message } from '@/components/Message'
 import { ChatService } from '@/utils'
 
+export interface Emotions {
+  joy: number
+  sadness: number
+  anticipation: number
+  surprise: number
+  anger: number
+  fear: number
+  disgust: number
+  trust: number
+}
 interface Props {
   name: string
   text: string
 }
 
-const initState: Props = { name: '', text: '' }
+const initState: Props = {
+  name: '',
+  text: '',
+}
+
+interface ChatProps {
+  name: string
+  text: string
+  emotions: Emotions
+}
 
 export const Chat = (state: Props = initState) => {
   const [messages, sendMessage] = ChatService({
     name: '管理人',
     text: `ようこそ、${state.name}さん`,
+    action: '',
   })
   const scrollBottomRef = useRef<HTMLDivElement>(null)
   const [text, setText] = useState('')
@@ -58,8 +78,15 @@ export const Chat = (state: Props = initState) => {
           {
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             //@ts-ignore
-            messages.map((msg: Props, idx: number) => {
-              return <Message key={idx} name={msg.name} message={msg.text} />
+            messages.map((msg: ChatProps, idx: number) => {
+              return (
+                <Message
+                  key={idx}
+                  name={msg.name}
+                  message={msg.text}
+                  emotions={msg.emotions}
+                />
+              )
             })
           }
           <div ref={scrollBottomRef}></div>
