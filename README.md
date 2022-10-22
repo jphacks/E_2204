@@ -53,6 +53,35 @@ CI/CDを構成
 独自のBERTの8クラス・マルチラベル感情解析の基盤・API
 - BERTモデルを独自に転移学習させ，軽量化のために，onnxruntimeのモデルに書き換えたものをサーバレス構成，IaCの管理のもとで動かしています．
 
+### ドメイン一覧（ドメインはサービス名が決定次第付け替える）
+#### 本番環境
+
+配信用Web
+- https://streamer.deathmatv.online/
+
+視聴用Web
+- https://viewer.deathmatv.online/
+
+内部API
+- https://api.deathmatv.online/
+
+内部API2
+- tbd
+
+#### ステージング環境
+
+配信用Web
+- https://stg-streamer.deathmatv.online/
+
+視聴用Web
+- https://stg-viewer.deathmatv.online/
+
+内部API
+- https://stg-api.deathmatv.online/
+
+内部API２
+- tbd
+
 
 ## 開発技術
 
