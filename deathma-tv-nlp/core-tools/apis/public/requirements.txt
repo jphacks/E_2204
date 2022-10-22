@@ -1,7 +1,7 @@
 # Do not include azure-functions-worker as it may conflict with the Azure Functions platform
 
 azure-functions ~= 1.11.2
-azure-cosmos ~= 4.3.0
+# azure-cosmos ~= 4.3.0
 numpy ~= 1.23.2
 onnxruntime ~= 1.12.1
 transformers ~= 4.21.2

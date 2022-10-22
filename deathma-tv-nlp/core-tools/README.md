@@ -1,4 +1,4 @@
-# Agilely: Azure Functions
+# Deathmatv: Azure Functions
 
 1. docker-compose upで起動してコンテナ内で実行
 ```

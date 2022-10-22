@@ -1,3 +1,3 @@
 cd ./public
-func azure functionapp publish ai2gacha-linux-function-app
+func azure functionapp publish deathmatv-linux-function-app
 cd ..
