@@ -12,6 +12,7 @@ env:
   AWS_REGION: ap-northeast-1
   ECR_REPOSITORY: deathma-tv-server
   IMAGE_TAG: ${{ github.sha }}
+  GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
 jobs:
   build-and-register:

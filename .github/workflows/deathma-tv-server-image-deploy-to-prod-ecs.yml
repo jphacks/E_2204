@@ -13,6 +13,7 @@ on:
 env:
   AWS_REGION: ap-northeast-1
   IMAGE_TAG: latest
+  GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
 jobs:
   deploy:
