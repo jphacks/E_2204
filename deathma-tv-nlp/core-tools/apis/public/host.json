@@ -1,0 +1,25 @@
+{
+  "version": "2.0",
+  "logging": {
+    "applicationInsights": {
+      "fileLoggingMode": "always",
+      "logLevel": {
+        "default": "Information",
+        "Host.Results": "Error",
+        "Function": "Error",
+        "Host.Aggregator": "Trace"
+      },
+      "applicationInsights": {
+        "samplingSettings": {
+          "isEnabled": true,
+          "maxTelemetryItemsPerSecond": 1,
+          "excludedTypes": "Exception"
+        }
+      }
+    }
+  },
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[3.*, 4.0.0)"
+  }
+}
