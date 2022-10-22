@@ -1,13 +1,10 @@
 package tech.notchman.infra
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.readValue
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import tech.notchman.model.Emotions
-import tech.notchman.model.EmotionsResponse
 import java.io.IOException
 
 class EmotionApiClient {
@@ -21,8 +18,9 @@ class EmotionApiClient {
     private val objectMapper: ObjectMapper = ObjectMapper()
     private val client = OkHttpClient.Builder().build()
 
-    fun getEmotions(text: String): Emotions {
-        val sendDataJson = "{\"text\":\"${text}\"}"
+    fun getEmotions(text: String): String {
+//        val sendDataJson = "{\"text\":\"${text}\"}"
+        val sendDataJson = "{\"text\":\"aaa\"}"
         val request = Request.Builder().url(BASE_URL).post(sendDataJson.toRequestBody(JSON_MEDIA)).build()
         client.newCall(request).execute().use { response ->
             if (!response.isSuccessful) {
@@ -31,11 +29,11 @@ class EmotionApiClient {
             }
             val responseString = response.body?.string().orEmpty()
 
-            println(response)
+            println(responseString)
 
-            val emotionsResponse = objectMapper.readValue<EmotionsResponse>(responseString)
+//            val emotionsResponse = objectMapper.readValue<EmotionsResponse>(responseString)
 
-            return emotionsResponse.result
+            return responseString
         }
 
     }

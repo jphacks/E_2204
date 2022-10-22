@@ -11,6 +11,7 @@ import kotlinx.serialization.json.Json
 import tech.notchman.infra.Connection
 import tech.notchman.infra.EmotionApiClient
 import tech.notchman.model.ChatMessage
+import tech.notchman.model.EmotionsResponse
 import tech.notchman.repository.ChatRepository
 import java.time.Duration
 import java.util.*
@@ -42,8 +43,8 @@ fun Application.configureSockets() {
                     val receivedText = frame.readText()
                     val chatMessage = mapper.readValue<ChatMessage>(receivedText)
                     val emotions = apiClient.getEmotions(chatMessage.text)
-                    chatMessage.emotions = emotions
-                    println(chatMessage)
+                    val emotionsResponse = mapper.readValue<EmotionsResponse>(emotions)
+                    chatMessage.emotions = emotionsResponse.result
                     thisConnections.forEach {
                         try {
                             it.session.send(Json.encodeToString(chatMessage))
