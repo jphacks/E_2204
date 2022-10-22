@@ -24,25 +24,25 @@ export const ProgressBar = () => {
     open_cnt: 0,
     progress: 0,
   })
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      instance
-        .get(proggressApi)
-        .then((response) => {
-          setProgress(JSON.parse(response.data))
-          setCount(count + 1)
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     instance
+  //       .get(proggressApi)
+  //       .then((response) => {
+  //         setProgress(JSON.parse(response.data))
+  //         setCount(count + 1)
 
-          console.log(count + ' ' + response.data)
-        }) //成功した場合、postsを更新する（then）
-        .catch(() => {
-          console.log('通信に失敗しました')
-        })
-    }, intervalMs)
+  //         console.log(count + ' ' + response.data)
+  //       }) //成功した場合、postsを更新する（then）
+  //       .catch(() => {
+  //         console.log('通信に失敗しました')
+  //       })
+  //   }, intervalMs)
 
-    return () => {
-      clearInterval(intervalId)
-    }
-  }, [progress])
+  //   return () => {
+  //     clearInterval(intervalId)
+  //   }
+  // }, [progress])
 
   return (
     <div>
