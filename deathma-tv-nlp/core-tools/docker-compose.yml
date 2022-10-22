@@ -1,0 +1,14 @@
+version: '1'
+services:
+  terraform:
+    platform: linux/x86_64
+    container_name: azure-functions
+    build: 
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - .:/src
+    working_dir: /src
+    entrypoint: bash
+    tty: true
